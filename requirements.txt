@@ -1,0 +1,15 @@
+torch
+torchvision
+torchaudio
+timm
+opencv-python
+facenet-pytorch
+mtcnn
+numpy
+pandas
+scikit-learn
+matplotlib
+pillow
+grad-cam
+streamlit
+Flask

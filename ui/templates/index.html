@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgery Gazette | Deepfake Detection Desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead__meta">
+            <span>Forgery Gazette</span>
+            <span>Today · {{ edition_date.strftime("%A, %B %d, %Y") }}</span>
+            <span>Vol. IX</span>
+        </div>
+        <h1>Deepfake Intelligence Bureau</h1>
+        <p class="masthead__lead">Authenticity briefings delivered in a vintage newsroom shell. Upload imagery or footage to expose manipulations with precision.</p>
+    </header>
+
+    <main>
+        <section class="columns">
+            <article class="column">
+                <h2>Front Page Feature · Image Desk</h2>
+                <p>Submit a still photograph. Choose between a spotlight on a single face or catalogue every face present.</p>
+                <form id="image-form" enctype="multipart/form-data">
+                    <label class="label">Upload Image</label>
+                    <input type="file" name="image" accept="image/*" required>
+
+                    <label class="label">Mode</label>
+                    <div class="radio-row">
+                        <label><input type="radio" name="mode" value="single" checked> Single Face Ledger</label>
+                        <label><input type="radio" name="mode" value="multi"> Multi-Face Census</label>
+                    </div>
+                    <button type="submit" class="btn">Run Detection</button>
+                </form>
+                <div id="image-status" class="status-banner"></div>
+
+                <div class="result-card" id="image-summary-card">
+                    <h3>Headline Verdict</h3>
+                    <div class="verdict" id="image-verdict">Awaiting submission…</div>
+                    <ul class="stats" id="image-stats"></ul>
+                </div>
+
+                <div class="faces-grid" id="faces-grid">
+                    <p>No faces catalogued yet. Upload an image to begin.</p>
+                </div>
+            </article>
+
+            <article class="column">
+                <h2>Evening Edition · Video Bureau</h2>
+                <p>Upload footage for rolling analysis. The newsroom charts a timeline of suspicion using aggregated frame scores.</p>
+                <form id="video-form" enctype="multipart/form-data">
+                    <label class="label">Upload Video</label>
+                    <input type="file" name="video" accept="video/*" required>
+                    <button type="submit" class="btn">Scan Footage</button>
+                </form>
+                <div id="video-status" class="status-banner"></div>
+
+                <div class="result-card" id="video-summary-card">
+                    <h3>Bulletin</h3>
+                    <div class="verdict" id="video-verdict">No footage processed yet.</div>
+                    <ul class="stats" id="video-stats"></ul>
+                </div>
+
+                <div class="timeline">
+                    <canvas id="timeline-chart"></canvas>
+                </div>
+            </article>
+        </section>
+
+        <section class="footer-notes">
+            <article>
+                <h4>How Scores Are Assembled</h4>
+                <p>The newsroom combines <strong>EfficientNet-B0 CNN</strong> probabilities (90% weight) with <strong>AutoEncoder reconstruction error</strong> (10% weight). Scores surpassing 0.15 are front-page "FAKE" alerts.</p>
+            </article>
+            <article>
+                <h4>Error Handling</h4>
+                <p>Images lacking discernible faces or broken videos surface gentle notices instead of crashes. All processing occurs locally — models from <code>models/cnn_efficientnet_b0.pt</code> and <code>models/ae.pt</code> are reused verbatim.</p>
+            </article>
+            <article>
+                <h4>One-Command Run</h4>
+                <p>Activate the Flask newsroom with <code>python ui/app.py</code> after installing requirements. Access via <code>http://localhost:8000</code>.</p>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
+
